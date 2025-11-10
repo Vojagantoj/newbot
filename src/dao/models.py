@@ -1,6 +1,10 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from http.cookiejar import UTC_ZONES
+
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
+from datetime import datetime, UTC
+
+from sqlalchemy.testing.plugin.plugin_base import engines
 
 Base = declarative_base()
 
@@ -19,5 +23,7 @@ class User(Base):
     registered_at = Column(DateTime, default=datetime.now(tz=UTC)) # Дата регистрации
 
 def __repr__(self):
-    return f'<User:(id={self.telegram_id}, username='{self.username}')>'
+    return f"<User:(id={self.telegram_id}, username='{self.username}')>"
 
+engine = create_engine('sqlite:///newbot.db', echo=True)
+Base.metadata.create_all(engine)
