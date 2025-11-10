@@ -25,5 +25,7 @@ class User(Base):
 def __repr__(self):
     return f"<User:(id={self.telegram_id}, username='{self.username}')>"
 
-engine = create_engine('sqlite:///newbot.db', echo=True)
-Base.metadata.create_all(engine)
+engine = create_engine(
+    os.getenv("NEWBOT_DATABASE_URL", 'sqlite:///newbot.db'),
+    echo=True)
+
